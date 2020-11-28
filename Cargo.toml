@@ -1,0 +1,20 @@
+[package]
+name = "wasm-info"
+version = "0.1.2"
+authors = [
+  "Nikolay Volf <nikvolf@gmail.com>",
+  "Svyatoslav Nikolsky <svyatonik@yandex.ru>",
+  "Sergey Shulepov <s.pepyakin@gmail.com>",
+]
+edition = "2018"
+description = "A wrapper of parity-wasm for printing information of wasm binary"
+repository = "https://github.com/clearloop/wasm-info"
+license = "MIT"
+homepage = "https://github.com/clearloop/wasm-info"
+keywords = ["wasm"]
+readme = './README.md'
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+parity-wasm = "0.42.1"
