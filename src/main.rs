@@ -6,7 +6,7 @@ use std::env;
 fn main() {
     let args = env::args().collect::<Vec<_>>();
     if args.len() < 2 {
-        println!("Usage: wasm-info <*.wasm>");
+        println!("Usage: wasm-info <*.wasm> [-n]");
         return;
     }
 
@@ -59,7 +59,11 @@ fn main() {
     }
 
     if args.len() > 2 && args[2] == "-n" {
-        module = module.parse_names().unwrap();
+        module = match module.parse_names() {
+            Ok(module) => module,
+            Err((_, module)) => module,
+        };
+
         let res = module
             .names_section()
             .unwrap()
@@ -70,6 +74,9 @@ fn main() {
             .map(|(idx, func)| format!("{:#}[{}]", rustc_demangle::demangle(func), idx))
             .collect::<Vec<_>>();
 
+        if res.is_empty() {
+            println!("No name section in {}", &args[1]);
+        }
         println!("{:#?}", res);
     }
 }

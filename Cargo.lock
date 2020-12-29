@@ -14,7 +14,7 @@ checksum = "6e3bad0ee36814ca07d7968269dd4b7ec89ec2da10c4bb613928d3077083c232"
 
 [[package]]
 name = "wasm-info"
-version = "0.1.2"
+version = "0.1.3"
 dependencies = [
  "parity-wasm",
  "rustc-demangle",
