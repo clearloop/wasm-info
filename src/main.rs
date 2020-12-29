@@ -5,12 +5,12 @@ use std::env;
 
 fn main() {
     let args = env::args().collect::<Vec<_>>();
-    if args.len() != 2 {
+    if args.len() < 2 {
         println!("Usage: wasm-info <*.wasm>");
         return;
     }
 
-    let module = parity_wasm::deserialize_file(&args[1]).expect("Failed to load module");
+    let mut module = parity_wasm::deserialize_file(&args[1]).expect("Failed to load module");
 
     println!("Module sections: {}", module.sections().len());
 
@@ -56,5 +56,20 @@ fn main() {
             }
             _ => {}
         }
+    }
+
+    if args.len() > 2 && args[2] == "-n" {
+        module = module.parse_names().unwrap();
+        let res = module
+            .names_section()
+            .unwrap()
+            .functions()
+            .unwrap()
+            .names()
+            .iter()
+            .map(|(idx, func)| format!("{:#}[{}]", rustc_demangle::demangle(func), idx))
+            .collect::<Vec<_>>();
+
+        println!("{:#?}", res);
     }
 }
